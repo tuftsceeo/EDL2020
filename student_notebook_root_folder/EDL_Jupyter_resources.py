@@ -33,3 +33,7 @@ def stop_speaking_ip():
         print('Pi is no longer speaking its ip address, restart the pi to have it speak the address again.')
     else:
         print('Pi is not speaking its ip address, restart the pi to have it speak the address again.')
+        
+#shuts down pi
+def shutdown_pi():
+    subprocess.Popen(['sudo','shutdown','-h','now'])
