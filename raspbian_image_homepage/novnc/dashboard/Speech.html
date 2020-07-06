@@ -1,0 +1,132 @@
+<html>
+	<head><title>Speech-to-Robot Example</title></head>
+	<body>
+		
+	<h1>Experimental Interface (Speech to Robot)</h1>
+
+		<p>Works on Chrome, see:
+			<ul>
+				<li><a href="https://wicg.github.io/speech-api/">https://wicg.github.io/speech-api/</a></li>
+				<li><a href="https://codeburst.io/html5-speech-recognition-api-670846a50e92">https://codeburst.io/html5-speech-recognition-api-670846a50e92</a></li>
+			</ul>
+		</p>
+		<textarea id="textarea" rows=5 cols=80></textarea>
+		<br />
+		<button id="button" onclick="toggleStartStop()"></button>
+		<button id="clear" onclick="textarea.value=''; check_text();">Clear</button>
+		
+		<p><hr /></p>
+		
+		<h1>Detection</h1>
+		
+		<p>Fill in words to check if present in textarea.  Fill in code to the right. <button id="check" onclick="check_text()">Check</button></p>
+		
+		<p>
+			<table><tr>
+				<td><input type="text" id="val1" onchange="check_text()" value="a"/></td>
+				<td><textarea rows=5 cols=50 id="script1">import hub
+hub.display.show("A")
+</textarea></td>
+				<td><button id="run1" onclick="force_run(1)">Force Run</button></td>
+			</tr></table>
+		</p>
+				<p>
+			<table><tr>
+				<td><input type="text" id="val2" onchange="check_text()" value="w"/></td>
+				<td><textarea rows=5 cols=50 id="script2">import hub
+hub.display.show("W")
+</textarea></td>
+				<td><button id="run2" onclick="force_run(2)">Force Run</button></td>
+			</tr></table>
+		</p>
+		<p>
+			<table><tr>
+				<td><input type="text" id="val3" onchange="check_text()" value="s"/></td>
+				<td><textarea rows=5 cols=50 id="script3">import hub
+hub.display.show("S")
+</textarea></td>
+				<td><button id="run3" onclick="force_run(3)">Force Run</button></td>
+			</tr></table>
+		</p>
+		<p>
+			<table><tr>
+				<td><input type="text" id="val4" onchange="check_text()" value="d"/></td>
+				<td><textarea rows=5 cols=50 id="script4">import hub
+hub.display.show("D")
+</textarea></td>
+				<td><button id="run4" onclick="force_run(4)">Force Run</button></td>
+			</tr></table>
+		</p>
+		
+		<form id="run_form" action="./RunScript.php" method="post" target="run_script">
+			<input type="hidden" id="script" name="script" value="tyu"/>
+			<input type="hidden" id="action" name="action" value="run"/>
+			Device: <input type="text" id="device" name="device" value="/dev/ttyACM0"/> 
+		</form>
+				
+		<p><hr /></p>
+
+		<iframe name="run_script" src="./RunScript.php" width=700 height=400></iframe>
+		
+		<script type="text/javascript">
+			var recognizing; // boolean variable used by toggleStartStop
+			window.SpeechRecognition = window.webkitSpeechRecognition || window.SpeechRecognition;
+			if ('SpeechRecognition' in window) {
+				// speech recognition API supported; continue
+				var recognition = new window.SpeechRecognition();
+				recognition.continuous = true;
+				recognition.onend = reset;
+				
+				// when result is present, update textarea
+				recognition.onresult = function (event) {
+					for (var i = event.resultIndex; i < event.results.length; ++i) {
+						if (event.results[i].isFinal) {
+							textarea.value += event.results[i][0].transcript.toLowerCase();
+						}
+					}
+				}
+				
+				function toggleStartStop() {
+					if (recognizing) {
+						recognition.stop();
+						reset();
+					} else {
+						recognition.start();
+						recognizing = true;
+						button.innerHTML = "Click to Stop";
+					}
+				}
+			} else {
+				// speech recognition API not supported
+				alert('Speech to Text not supported ... use Chrome Browser.');
+			}
+			reset();
+		
+		
+			function reset() {
+				recognizing = false;
+				button.innerHTML = "Click to Speak";
+				check_text(); // check to see if substrings match
+			}
+
+			function force_run(num) {
+				run_form.script.value = eval('script' + num).value;
+				run_form.submit();
+			}
+			
+			function check_text() {
+				textarea_text = textarea.value;
+				for (i=0; i<4; i++) {
+					input_text = eval('val' + (i+1)); // pointer to text area
+					if (textarea_text.indexOf(input_text.value) >= 0) {
+						input_text.style.backgroundColor = '#c4ffc4'; // light green (match!)
+						force_run(i+1);
+					} else {
+						input_text.style.backgroundColor = '#ffc4c4'; // light red (no match)
+					}
+				}
+			}
+		
+		</script>
+	</body>
+</html>

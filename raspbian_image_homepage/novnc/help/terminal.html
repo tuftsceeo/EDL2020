@@ -1,0 +1,67 @@
+<html>
+	<head><title>Using the Terminal</title></head>
+<body>
+	<h1>Using the Terminal</h1>
+	
+	<p>You can use the Terminal as a <a href="#python">Python Interpreter</a> or to access the <a href="#REPL">REPL Interface</a> within SPIKE Prime.</p>
+
+	<p><b><em>Launch the Terminal</em></b> and then log in using the username <b><em>pi</em></b> and the password <b><em>robots1234</em></b>.</p>
+	
+	<p><img src="./login.png" border=1 /></p>
+	
+	<a name="python" />
+	<h2>Python Interpreter</h2>
+	
+	<p>To access the <b><em>Python Interpreter</em></b> type <code>python3</code> at the main prompt.  Then you can enter Python commands into the interpreter.</p>
+	
+	<p><img src="./interpreter.png" border=1 /></p>
+	
+	<p>Type <code>exit()</code> in order to exit the Python Interpreter and return back to the default Raspberry Pi/Linux command line.</p>
+		
+	<p><img src="./exit.png" border=1 /></p>
+	
+	<p>From the default Raspberry Pi/Linux command line, you can issue various Linux
+		commands (e.g. <a href="https://www.dummies.com/computers/operating-systems/linux/common-linux-commands/" target=_blank>Common
+		Linux Commands</a> and <a href="https://www.pcsuggest.com/basic-linux-commands/" target=_blank>25 basic commands</a>)
+		as well as execute Python code (stored in a <code>.py</code> file).</p>
+	
+	<p><img src="./runcode.png" border=1 /></p>
+	
+	<p>(That example above is overly complex. The important part: if you have a file called <code>test.py</code> that contains Python code,
+		and you want to execute that code, issue the command <code>python3 test.py</code> to run it.)</p>
+	
+	<a name="REPL" />
+	<h2>MicroPython REPL</h2>
+	
+	<p>The <b><em>REPL</em></b> for MicroPython is a "Read Evaluate Print Loop" interactive prompt that lets you issue commands to the hardware (specifically here, the SPIKE Prime hardware).</p>
+	
+	<p>To access the <b><em>REPL Interpreter</em></b>, you first need to establish a serial connection to the hardware.	To do this, find the name of your SPIKE Prime hardware (probably
+		<code>/dev/ttyACM0</code>) by typing <code>ls /dev/tty*</code> and looking for the one that starts with <code>ACM</code> (e.g. <code>ACM0</code>, <code>ACM1</code>, etc)</p>
+		
+	<p>Once you have identified the name of your SPIKE Prime Hardware, connect to it using the command <code>screen /dev/ttyAMC0 115200</code> (and specifying your particular hardware)</p>
+	
+	<p><img src="./launchREPL.png" border=1 /></p>
+	
+	<p>Doing so will enter into the <b><em>REPL</em></b> mode.  Hit "control-C" in order to interrupt the currently running program
+		and get to the live/active REPL prompt.  Once there, you can issue teh <code>help()</code> command to see a variety of helpful commands and functions.</p>
+	
+	<p><img src="./REPLhelp.png" border=1 /></p>
+	
+	<p>Type <code>import hub</code> to import the hub module, which will then allow you to inquire about the hub's general info and current status.</p>
+	
+	<p><img src="./importhub.png" border=1 /></p>
+	
+	<p>Note the following Control commands:
+		<ul>
+			<li><b>CTRL-A</b>: on a blank line, enter raw REPL mode</li>
+			<li><b>CTRL-B</b>: on a blank line, enter normal REPL mode</li>
+			<li><b>CTRL-C</b>: interrupt a running program</li>
+			<li><b>CTRL-D</b>: on a blank line, do a soft reset of the board</li>
+			<li><b>CTRL-E</b>: on a blank line, enter paste mode</li>
+		</ul>
+	</p>
+
+	<p>For full list of available MicroPython commands for SPIKE Prime, see <a href="./SPIKE_Prime_MicroPython_Commands.html" target=_blank>SPIKE Prime MicroPython Commands</a>.</p>
+	<p>For more information on all the MicroPython commands, see the official <a href="https://docs.micropython.org/en/latest/index.html" target=_blank>MicroPython Documentation</a>.</p>
+	
+</body></html>

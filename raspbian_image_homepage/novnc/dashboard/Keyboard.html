@@ -1,0 +1,239 @@
+<html>
+	<head><title>Keyboard-to-Robot Example</title></head>
+	<body>
+		
+	<h1>Experimental Interface (Keyboard to Robot)</h1>
+			
+	<script lang="javascript">
+		key_state_w = false;
+		key_state_a = false;
+		key_state_s = false;
+		key_state_d = false;
+		key_state_q = false;
+		key_state_x = true;
+		
+		green = '#c4ffc4';
+		red = '#ffc4c4';
+		function update_states() {
+			if (key_state_w) { key_w.style.backgroundColor = green; } else { key_w.style.backgroundColor = red; }
+			if (key_state_a) { key_a.style.backgroundColor = green; } else { key_a.style.backgroundColor = red; }
+			if (key_state_s) { key_s.style.backgroundColor = green; } else { key_s.style.backgroundColor = red; }
+			if (key_state_d) { key_d.style.backgroundColor = green; } else { key_d.style.backgroundColor = red; }
+			if (key_state_q) { key_q.style.backgroundColor = green; } else { key_q.style.backgroundColor = red; }
+			if (key_state_x) { key_x.style.backgroundColor = green; } else { key_x.style.backgroundColor = red; }
+		}
+		
+		function check_current() {
+			if (current_state.value.indexOf('w') >= 0) { key_state_w = true; } else { key_state_w = false; }
+			if (current_state.value.indexOf('a') >= 0) { key_state_a = true; } else { key_state_a = false; }
+			if (current_state.value.indexOf('s') >= 0) { key_state_s = true; } else { key_state_s = false; }
+			if (current_state.value.indexOf('d') >= 0) { key_state_d = true; } else { key_state_d = false; }
+			if (current_state.value.indexOf('q') >= 0) { key_state_q = true; } else { key_state_q = false; }
+			if (current_state.value.indexOf('x') >= 0) { key_state_x = true; } else { key_state_x = false; }
+			update_states();
+			check_text();
+		}
+		
+		document.addEventListener("keydown", checkKeyPressed, false);
+		document.addEventListener("keyup", checkKeyRelease, false);
+
+		// keycodes from: http://www.asciitable.com/
+		function checkKeyPressed(e) {
+			prev = current_state.value;
+			if (e.keyCode === 87) {
+				current_state.value = 'w';
+			} 
+			if (e.keyCode === 65) {
+				current_state.value = 'a';
+			} 
+			if (e.keyCode === 83) {
+				current_state.value = 's';
+			} 
+			if (e.keyCode === 68) {
+				current_state.value = 'd';
+			}
+			if (e.keyCode === 81) {
+				current_state.value = 'q';
+			}
+			if (prev != current_state.value) {
+				check_current();
+			} else {
+				// same key pressed twice in a row, so do nothing
+			}
+		}
+		
+		function checkKeyRelease(e) {
+			if (e.keyCode === 87 || e.keyCode === 65 || e.keyCode === 83 || e.keyCode === 68 || e.keyCode === 81) {
+				current_state.value = 'x';
+			} 
+			check_current();
+		}
+		
+	</script>
+	
+	<p><input type="text" id="key_w" value="W"></p>
+	<p><input type="text" id="key_a" value="A"></p>
+	<p><input type="text" id="key_s" value="S"></p>
+	<p><input type="text" id="key_d" value="D"></p>
+	<p><input type="text" id="key_q" value="Q"></p>
+	<p><input type="text" id="key_x" value="X"> (release)</p>
+	
+	<p>Current:<br /><input type="text" id="current_state" value=""></p>
+
+	<script lang="javascript">
+		update_states(); // onload
+	</script>
+		
+		<p><hr /></p>
+		
+		<h1>Detection</h1>
+		
+		<p>Fill in words to check if present in textarea.  Fill in code to the right. <button id="check" onclick="check_text()">Check</button></p>
+		
+		<p>
+			<table><tr>
+				<td><input type="text" id="val1" onchange="check_text()" value="a"/></td>
+				<td><textarea rows=5 cols=50 id="script1">import hub
+hub.display.show("A")
+hub.port.A.motor.run_at_speed(30)
+hub.port.B.motor.run_at_speed(30)
+</textarea></td>
+				<td><button id="run1" onclick="force_run(1)">Force Run</button></td>
+			</tr></table>
+		</p>
+				<p>
+			<table><tr>
+				<td><input type="text" id="val2" onchange="check_text()" value="w"/></td>
+				<td><textarea rows=5 cols=50 id="script2">import hub
+hub.display.show("W")
+hub.port.A.motor.run_at_speed(-30)
+hub.port.B.motor.run_at_speed(30)
+</textarea></td>
+				<td><button id="run2" onclick="force_run(2)">Force Run</button></td>
+			</tr></table>
+		</p>
+		<p>
+			<table><tr>
+				<td><input type="text" id="val3" onchange="check_text()" value="s"/></td>
+				<td><textarea rows=5 cols=50 id="script3">import hub
+hub.display.show("S")
+hub.port.A.motor.run_at_speed(30)
+hub.port.B.motor.run_at_speed(-30)
+</textarea></td>
+				<td><button id="run3" onclick="force_run(3)">Force Run</button></td>
+			</tr></table>
+		</p>
+		<p>
+			<table><tr>
+				<td><input type="text" id="val4" onchange="check_text()" value="d"/></td>
+				<td><textarea rows=5 cols=50 id="script4">import hub
+hub.display.show("D")
+hub.port.A.motor.run_at_speed(-30)
+hub.port.B.motor.run_at_speed(-30)
+</textarea></td>
+				<td><button id="run4" onclick="force_run(4)">Force Run</button></td>
+			</tr></table>
+		</p>
+		
+		<p>
+			<table><tr>
+				<td><input type="text" id="val5" onchange="check_text()" value="q"/></td>
+				<td><textarea rows=5 cols=50 id="script5">import hub
+import utime
+hub.display.show("Q")
+hub.port.C.motor.run_at_speed(-100)
+utime.sleep(.435)
+hub.port.C.motor.brake()
+utime.sleep(1)
+hub.port.C.motor.run_at_speed(30)
+utime.sleep(1)
+hub.port.C.motor.brake()
+</textarea></td>
+				<td><button id="run5" onclick="force_run(5)">Force Run</button></td>
+			</tr></table>
+		</p>
+
+		<p>
+			<table><tr>
+				<td><input type="text" id="val6" onchange="check_text()" value="x"/></td>
+				<td><textarea rows=5 cols=50 id="script6">import hub
+hub.display.show("X")
+hub.port.A.motor.brake()
+hub.port.B.motor.brake()
+</textarea></td>
+				<td><button id="run6" onclick="force_run(6)">Force Run</button></td>
+			</tr></table>
+		</p>
+
+		<form id="run_form" action="./RunScript.php" method="post" target="run_script">
+			<input type="hidden" id="script" name="script" value="tyu"/>
+			<input type="hidden" id="action" name="action" value="run"/>
+			Device: <input type="text" id="device" name="device" value="/dev/ttyACM0"/> 
+		</form>
+				
+		<p><hr /></p>
+
+		<iframe name="run_script" src="./RunScript.php" width=700 height=400></iframe>
+		
+		<script type="text/javascript">
+			var recognizing; // boolean variable used by toggleStartStop
+			window.SpeechRecognition = window.webkitSpeechRecognition || window.SpeechRecognition;
+			if ('SpeechRecognition' in window) {
+				// speech recognition API supported; continue
+				var recognition = new window.SpeechRecognition();
+				recognition.continuous = true;
+				recognition.onend = reset;
+				
+				// when result is present, update textarea
+				recognition.onresult = function (event) {
+					for (var i = event.resultIndex; i < event.results.length; ++i) {
+						if (event.results[i].isFinal) {
+							textarea.value += event.results[i][0].transcript.toLowerCase();
+						}
+					}
+				}
+				
+				function toggleStartStop() {
+					if (recognizing) {
+						recognition.stop();
+						reset();
+					} else {
+						recognition.start();
+						recognizing = true;
+						button.innerHTML = "Click to Stop";
+					}
+				}
+			} else {
+				// speech recognition API not supported
+				alert('Speech to Text not supported ... use Chrome Browser.');
+			}
+			reset();
+		
+		
+			function reset() {
+				recognizing = false;
+				button.innerHTML = "Click to Speak";
+				check_text(); // check to see if substrings match
+			}
+
+			function force_run(num) {
+				run_form.script.value = eval('script' + num).value;
+				run_form.submit();
+			}
+			
+			function check_text() {
+				textarea_text = current_state.value;
+				for (i=0; i<6; i++) {
+					input_text = eval('val' + (i+1)); // pointer to text area
+					if (textarea_text.indexOf(input_text.value) >= 0) {
+						input_text.style.backgroundColor = '#c4ffc4'; // light green (match!)
+						force_run(i+1);
+					} else {
+						input_text.style.backgroundColor = '#ffc4c4'; // light red (no match)
+					}
+				}
+			}
+		
+		</script>
+	</body>
+</html>
