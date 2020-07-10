@@ -7,6 +7,8 @@
   $canvas_site = 'https://canvas.tufts.edu/courses/' . $canvas_course_number;
   $canvas_help = $canvas_site . '/pages/help-topics';
   $canvas_faq = $canvas_site . '/pages/frequently-asked-questions';
+  
+  $zoom_link = 'https://tufts.zoom.us/my/jenncross';
 
 ?>
 <html>
@@ -42,7 +44,7 @@
             <img src="img/LEGO_Education_logo.png" class="standard logo" alt="Dexter Industries!" >
             <img src="img/LEGO_Education_logo.png" class="retina logo" alt="Dexter Industries!" >
             </a>
-        </td>
+        </td
       </tr></table>
       <br />
       <font size=-2>
@@ -58,25 +60,34 @@
 <section>
   <h1> Main Tools </h1>
   <p>
-  We will be using Jupyter Notebooks to Program our GoPiGo and
-  Canvas to stay up to date on course info and meeting times.
+  We will be using Jupyter Notebooks to Program our GoPiGo in Python,
+  Canvas to stay up to date on course info and meeting times, and
+  Zoom to meet virtually as a class. 
   </p>
   <table width='100%'><tr>
-    <td width='50%' align=center>
-      <b><u>Where we code</u></b><br><br>
+    <td width='33%' align=center>
+      <b><u>Jupyter Notebooks</u></b><br><br>
       <a href="http://<?php echo $dexhost; ?>:8888">
         <img src="img/jupyter_logo.png" onerror="this.src='jupyter_logo.png'; this.onerror=null;"style="height:128px;">
         <span class="button">Open Jupyter</span>
       </a>
       <em>
-        Default Password / Token: <strong>robots1234</strong>
+        Default Token: <strong>robots1234</strong>
       </em>
     </td>
-    <td width='50%' align=center>
+    <td width='33%' align=center>
       <b><u>Course Homepage</u></b><br><br>
       <a href="<?php echo $canvas_site; ?>" target=_blank>
         <img src="img/Canvas_Logo.png" onerror="this.src='img/Canvas_Logo.png'; this.onerror=null;"style="height:128px;">
         <span class="button">Open Canvas</span>
+      </a>
+      <em>&nbsp;</em>
+    </td>
+    <td width='33%' align=center>
+      <b><u>Zoom Room</u></b><br><br>
+      <a href="<?php echo $zoom_link; ?>" target=_blank>
+        <img src="img/zoom.png" onerror="this.src='img/zoom.png'; this.onerror=null;"style="height:128px;">
+        <span class="button">Join Zoom</span>
       </a>
       <em>&nbsp;</em>
     </td>
@@ -120,8 +131,10 @@
   <ul style='list-style-type:square; line-height:150%'>
   <li>Visit the <a href="<?php echo $canvas_faq; ?>" target=_blank>Canvas FAQ section</a> to view frequently asked questions.</li>
   <li>Visit the <a href="<?php echo $canvas_help; ?>" target=_blank>Canvas help section</a> to view help topics about GoPiGo and Jupyter.</li>
-  <li><a href='./help/terminal.html' target=_blank>Terminal Help / Instructions</a></li>
+  <li><a href="https://gopigo3.readthedocs.io/en/master/api-basic/easygopigo3.html" target=_blank>
+  Documentation for the EasyGoPiGo3 Library: </a> Functions and Methods for your GoPiGo.</li>
   <li><a href="https://docs.python.org/3/" target=_blank>Python 3 Documentation:</a> Documentation for the Python 3 language.</li>
+  <li><a href='./help/terminal.html' target=_blank>Terminal Help / Instructions</a></li>
   <li>See more about the <a href="http://www.dexterindustries.com/gopigo-tutorials-documentation/?raspbian_for_robots" target="_blank" class="product gopigo">GoPiGo.</a></li>
   </ul>
   </section>
